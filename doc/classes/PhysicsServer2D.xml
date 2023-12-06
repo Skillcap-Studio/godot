@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<class name="PhysicsServer2D" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="PhysicsServer2D" inherits="Object"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../class.xsd">
 	<brief_description>
 		A server interface for low-level 2D physics access.
 	</brief_description>
@@ -939,7 +940,7 @@
 			<return type="void" />
 			<param index="0" name="space" type="RID" />
 			<description>
-				Flushes [param space]'s queries. It is necessary to call this method before calling [method space_step].
+				Flushes [param space]'s queries. It is necessary to call this method after calling [method space_step] with an active space from [code]_physics_process[/code]. Otherwise, call this method before calling [method space_step].
 			</description>
 		</method>
 		<method name="space_get_direct_state">
@@ -994,7 +995,8 @@
 			<param index="0" name="space" type="RID" />
 			<param index="1" name="delta" type="float" />
 			<description>
-				Steps [param space]. This can be used to create a rollbackable simulation. You should call [method space_flush_queries] first.
+				Manually advance [param space] forward in [param delta]. This technique can be used for speeding up physics simulations, as seen in advanced rollback-style networking, or for predicting outcomes in scenarios such as hitting a ball in a billiards game.
+				[b]Note:[/b] If call this method with an active [param space] from [code]_physics_process()[/code], you should call [method space_flush_queries] afterwards. Otherwise, call [method space_flush_queries] beforehand.
 			</description>
 		</method>
 		<method name="world_boundary_shape_create">
@@ -1017,10 +1019,12 @@
 		<constant name="SPACE_PARAM_CONTACT_DEFAULT_BIAS" value="3" enum="SpaceParameter">
 			Constant to set/get the default solver bias for all physics contacts. A solver bias is a factor controlling how much two objects "rebound", after overlapping, to avoid leaving them in that state because of numerical imprecision. The default value of this parameter is [member ProjectSettings.physics/2d/solver/default_contact_bias].
 		</constant>
-		<constant name="SPACE_PARAM_BODY_LINEAR_VELOCITY_SLEEP_THRESHOLD" value="4" enum="SpaceParameter">
+		<constant name="SPACE_PARAM_BODY_LINEAR_VELOCITY_SLEEP_THRESHOLD" value="4"
+			enum="SpaceParameter">
 			Constant to set/get the threshold linear velocity of activity. A body marked as potentially inactive for both linear and angular velocity will be put to sleep after the time given. The default value of this parameter is [member ProjectSettings.physics/2d/sleep_threshold_linear].
 		</constant>
-		<constant name="SPACE_PARAM_BODY_ANGULAR_VELOCITY_SLEEP_THRESHOLD" value="5" enum="SpaceParameter">
+		<constant name="SPACE_PARAM_BODY_ANGULAR_VELOCITY_SLEEP_THRESHOLD" value="5"
+			enum="SpaceParameter">
 			Constant to set/get the threshold angular velocity of activity. A body marked as potentially inactive for both linear and angular velocity will be put to sleep after the time given. The default value of this parameter is [member ProjectSettings.physics/2d/sleep_threshold_angular].
 		</constant>
 		<constant name="SPACE_PARAM_BODY_TIME_TO_SLEEP" value="6" enum="SpaceParameter">
