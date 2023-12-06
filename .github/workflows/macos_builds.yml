@@ -1,11 +1,11 @@
-name: 🍎 macOS Builds
+name: Skillcap macOS Builds
 on:
   workflow_call:
 
 # Global Settings
 env:
   # Used for the cache key. Add version suffix to force clean build.
-  GODOT_BASE_BRANCH: master
+  GODOT_BASE_BRANCH: main
   SCONSFLAGS: verbose=yes warnings=extra werror=yes module_text_server_fb_enabled=yes
 
 concurrency:
