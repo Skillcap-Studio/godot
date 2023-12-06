@@ -1,4 +1,4 @@
-name: Skillcap macOS Builds
+name: 🍎 macOS Builds
 on:
   workflow_call:
 
